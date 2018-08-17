@@ -51,3 +51,5 @@ with open("question.txt","r+") as f:
     print newcontents
     f.close()
 '''
+
+autopep8 --in-place --aggressive --aggressive installer.py

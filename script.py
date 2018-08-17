@@ -4,7 +4,7 @@ from PIL import Image
 import subprocess
 import time
 
-filename = "./output/answer4"
+filename = "./output/answer"
 
 coords_real_1 = "40 320"
 coords_real_2 = "360 460"
@@ -83,7 +83,7 @@ def search_query(filename):
 
 
 def main():
-    #screenshot_and_preprocess(filename, "train")
+    screenshot_and_preprocess(filename, "train")
     ocr(filename)
     search_query(filename)
 
