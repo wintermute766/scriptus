@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-
 import queue
 import subprocess
 import threading
@@ -8,8 +6,6 @@ import time
 from tkinter import *
 
 from PIL import Image
-
-filename = "./output/answer"
 
 coords_real_1 = "40 320"
 coords_real_2 = "360 460"
@@ -27,100 +23,12 @@ image_command_2 = "./textcleaner {}.png {}.png"
 ocr_command = "tesseract -l rus+eng {}.png {}"
 
 
-def choose_area(coords1, coords2):
-    subprocess.call([command_move.format(coords1)], shell=True)
-    subprocess.call([command_down], shell=True)
-    subprocess.call([command_move.format(coords2)], shell=True)
-    subprocess.call([command_up], shell=True)
-
-
-def screenshot_and_preprocess(filename, area):
-    subprocess.call([screenshot_command.format(filename)], shell=True)
-    if area == "train":
-        choose_area(coords_train_1, coords_train_2)
-    else:
-        choose_area(coords_real_1, coords_real_2)
-    time.sleep(0.5)
-    subprocess.call([image_command_1.format(filename)], shell=True)
-    subprocess.call([image_command_2.format(filename, filename)], shell=True)
-    im = Image.open(filename + ".png")
-    # print(im.format, "%dx%d" % im.size, im.mode)
-    toPaste = Image.new("L", (960, 45), "white")
-    box1 = (0, 105, 960, 150)
-    box2 = (0, 255, 960, 300)
-    im.paste(toPaste, box1)
-    im.paste(toPaste, box2)
-    im.save(filename + ".png")
-
-
-def ocr(filename, area):
-    screenshot_and_preprocess(filename, area)
-    subprocess.call([ocr_command.format(filename, filename)], shell=True)
-
-
-def search_query(filename, input, queue):
-    with open(filename + ".txt", "r+") as f:
-        contents = f.read()
-        f.seek(0)
-        newcontents = contents.replace('\n\n', '\n')
-        f.write(newcontents)
-        f.close()
-    with open(filename + ".txt", "r") as f:
-        contents = f.read()
-        ans = contents.split("\n")
-        result1 = open("./output/result1.txt", "w", encoding="utf-8")
-        result2 = open("./output/result2.txt", "w", encoding="utf-8")
-        result3 = open("./output/result3.txt", "w", encoding="utf-8")
-
-        thread1 = threading.Thread(
-            target=(
-                lambda: perform_search(
-                    input,
-                    ans[0],
-                    result1,
-                    queue,
-                    "success1")))
-        thread1.start()
-        # thread1.join()
-
-        thread2 = threading.Thread(
-            target=(
-                lambda: perform_search(
-                    input,
-                    ans[1],
-                    result2,
-                    queue,
-                    "success2")))
-        thread2.start()
-        # thread2.join()
-
-        thread3 = threading.Thread(
-            target=(
-                lambda: perform_search(
-                    input,
-                    ans[2],
-                    result3,
-                    queue,
-                    "success3")))
-        thread3.start()
-        thread3.join()
-
-        result1.close()
-        result2.close()
-        result3.close()
-        f.close()
-
-
-def perform_search(input, query, result, queue, msg):
-    subprocess.call(["BROWSER=w3m googler --np -n 15 " + input + " " + query], shell=True, stdout=result)
-    queue.put(msg)
-
-
 class GuiPart:
-    def __init__(self, master, queue, ocr, search, endCommand, area):
+    def __init__(self, root, queue, ocr, ocr_only, search, visualize, wipe, end_command, area):
 
         self.queue = queue
         self.search = search
+        self.wipe = wipe
 
         self.txt1 = StringVar()
         self.txt1.set('empty')
@@ -129,37 +37,61 @@ class GuiPart:
         self.txt3 = StringVar()
         self.txt3.set('empty')
 
-        self.row = Frame(master)
-        self.ent = Entry(self.row)
-        self.ent.focus_set()
-        self.status1 = Label(self.row, textvariable=self.txt1, fg='red')
-        self.status2 = Label(self.row, textvariable=self.txt2, fg='red')
-        self.status3 = Label(self.row, textvariable=self.txt3, fg='red')
-        self.row.pack(side=TOP, fill=X, padx=5, pady=5)
-        self.ent.pack(side=LEFT, expand=NO)
+        # row 1
+
+        self.row1 = Frame(root)
+
+        self.query = Entry(self.row1)
+        self.query.focus_set()
+
+        self.status1 = Label(self.row1, textvariable=self.txt1, fg='red', padx=5, pady=5)
+        self.status2 = Label(self.row1, textvariable=self.txt2, fg='red', padx=5, pady=5)
+        self.status3 = Label(self.row1, textvariable=self.txt3, fg='red', padx=5, pady=5)
+
+        self.filename = Entry(self.row1)
+        self.filename.insert(END, 'output/answer')
+
+        self.row1.pack(fill=X, padx=5, pady=5)
+        self.query.pack(side=LEFT, expand=NO)
         self.status1.pack(side=LEFT)
         self.status2.pack(side=LEFT)
         self.status3.pack(side=LEFT)
+        self.filename.pack(side=RIGHT)
 
-        self.b1 = Button(master, text='Screenshot', command=(lambda: ocr(filename, area)))
+        # row 2
+
+        self.row2 = Frame(root)
+
+        self.row2.pack(fill=X, padx=5, pady=5)
+
+        self.b1 = Button(self.row2, text='Screenshot', command=(lambda: ocr(self.filename.get(), area)))
         self.b1.pack(side=LEFT, padx=5, pady=5)
 
-        self.b2 = Button(master, text='Search', command=(lambda: search(filename, self.ent.get(), queue)))
+        self.b2 = Button(self.row2, text='Search',
+                         command=(lambda: search(self.filename.get(), self.query.get(), queue)))
         self.b2.pack(side=LEFT, padx=5, pady=5)
 
-        self.b3 = Button(master, text='Show')
+        self.b3 = Button(self.row2, text='Show', command=(lambda: visualize(self.query.get())))
         self.b3.pack(side=LEFT, padx=5, pady=5)
 
-        self.b4 = Button(master, text='Clear files', command=(lambda: queue.put("wipe")))
+        # row 3
+
+        self.row3 = Frame(root)
+        self.row3.pack(fill=X, padx=5, pady=5)
+
+        self.b4 = Button(self.row3, text='Clear files', command=(lambda: queue.put("wipe")))
         self.b4.pack(side=LEFT, padx=5, pady=5)
 
-        self.b5 = Button(master, text='Clear text', command=(lambda: queue.put("clear")))
-        self.b5.pack(side=LEFT, padx=5, pady=5)
+        self.b7 = Button(self.row3, text='Exit', command=end_command)
+        self.b7.pack(side=RIGHT, padx=5, pady=5)
 
-        self.b6 = Button(master, text='Exit', command=endCommand)
+        self.b5 = Button(self.row3, text='Clear text', command=(lambda: queue.put("clear")))
+        self.b5.pack(side=RIGHT, padx=5, pady=5)
+
+        self.b6 = Button(self.row3, text='OCR', command=(lambda: ocr_only(self.filename.get())))
         self.b6.pack(side=RIGHT, padx=5, pady=5)
 
-    def processIncoming(self, master):
+    def processIncoming(self):
         while self.queue.qsize():
             try:
                 msg = self.queue.get(0)
@@ -173,18 +105,7 @@ class GuiPart:
                     self.txt3.set('success')
                     self.status3.configure(textvariable=self.txt3, fg='green')
                 if msg == 'wipe':
-                    f1 = open("./output/result1.txt", "w")
-                    f2 = open("./output/result2.txt", "w")
-                    f3 = open("./output/result3.txt", "w")
-                    f1.write(
-                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    f2.write(
-                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    f3.write(
-                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    f1.close()
-                    f2.close()
-                    f3.close()
+                    self.wipe()
                     self.txt1.set('empty')
                     self.txt2.set('empty')
                     self.txt3.set('empty')
@@ -192,41 +113,179 @@ class GuiPart:
                     self.status2.configure(textvariable=self.txt2, fg='red')
                     self.status3.configure(textvariable=self.txt3, fg='red')
                 if msg == 'clear':
-                    self.ent.delete(0, 'end')
+                    self.query.delete(0, 'end')
                 if msg == "enter_to_search":
-                    self.search(filename, self.ent.get(), self.queue)
+                    self.search(self.filename.get(), self.query.get(), self.queue)
             except queue.Empty:
                 pass
 
 
 class app:
-    def __init__(self, master):
-        self.master = master
+    def __init__(self, root):
         self.queue = queue.Queue()
-        root.bind('<Return>', lambda e=self: self.queue.put("enter_to_search"))
-        self.gui = GuiPart(
-            master,
-            self.queue,
-            ocr,
-            search_query,
-            self.endApplication,
-            "train"
-        )
+        self.root = root
+        self.root.bind('<Return>', lambda e=self: self.queue.put("enter_to_search"))
+        self.gui = GuiPart(self.root,
+                           self.queue,
+                           self.shot_and_ocr,
+                           self.ocr_only,
+                           self.search_query,
+                           self.visualize,
+                           self.wipe,
+                           self.end_application,
+                           "train"
+                           )
         self.running = 1
-        self.periodicCall()
+        self.periodic_call()
 
-    def periodicCall(self):
-        self.gui.processIncoming(self.master)
+    def periodic_call(self):
+        self.gui.processIncoming()
         if not self.running:
             sys.exit(1)
-        self.master.after(200, self.periodicCall)
+        root.after(200, self.periodic_call)
 
-    def endApplication(self):
+    def end_application(self):
         self.running = 0
+
+    # Business logic
+
+    def choose_area(self, coords1, coords2):
+        subprocess.call([command_move.format(coords1)], shell=True)
+        subprocess.call([command_down], shell=True)
+        subprocess.call([command_move.format(coords2)], shell=True)
+        subprocess.call([command_up], shell=True)
+
+    def screenshot_and_preprocess(self, filename, area):
+        subprocess.call([screenshot_command.format(filename)], shell=True)
+        if area == "train":
+            self.choose_area(coords_train_1, coords_train_2)
+        else:
+            self.choose_area(coords_real_1, coords_real_2)
+        time.sleep(0.5)
+        subprocess.call([image_command_1.format(filename)], shell=True)
+        subprocess.call([image_command_2.format(filename, filename)], shell=True)
+        im = Image.open(filename + ".png")
+        # print(im.format, "%dx%d" % im.size, im.mode)
+        toPaste = Image.new("L", (960, 45), "white")
+        box1 = (0, 105, 960, 150)
+        box2 = (0, 255, 960, 300)
+        im.paste(toPaste, box1)
+        im.paste(toPaste, box2)
+        im.save(filename + ".png")
+
+    def ocr_only(self, filename):
+        subprocess.call([ocr_command.format(filename, filename)], shell=True)
+
+    def shot_and_ocr(self, filename, area):
+        self.screenshot_and_preprocess(filename, area)
+        subprocess.call([ocr_command.format(filename, filename)], shell=True)
+
+    def search_query(self, filename, input, queue):
+        with open(filename + ".txt", "r+") as f:
+            contents = f.read()
+            f.seek(0)
+            newcontents = contents.replace('\n\n', '\n')
+            f.write(newcontents)
+            f.close()
+        with open(filename + ".txt", "r") as f:
+            contents = f.read()
+            ans = contents.split("\n")
+            result1 = open("./output/result1.txt", "w", encoding="utf-8")
+            result2 = open("./output/result2.txt", "w", encoding="utf-8")
+            result3 = open("./output/result3.txt", "w", encoding="utf-8")
+
+            thread1 = threading.Thread(target=(lambda: self.perform_search(input, ans[0], result1, queue, "success1")))
+            thread1.start()
+            thread2 = threading.Thread(target=(lambda: self.perform_search(input, ans[1], result2, queue, "success2")))
+            thread2.start()
+            thread3 = threading.Thread(target=(lambda: self.perform_search(input, ans[2], result3, queue, "success3")))
+            thread3.start()
+
+            thread1.join()
+
+            result1.close()
+            result2.close()
+            result3.close()
+            f.close()
+
+    @staticmethod
+    def perform_search(input, query, result, queue, msg):
+        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=result)
+        queue.put(msg)
+
+    def wipe(self):
+        f1 = open("./output/result1.txt", "w")
+        f2 = open("./output/result2.txt", "w")
+        f3 = open("./output/result3.txt", "w")
+        f1.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        f2.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        f3.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        f1.close()
+        f2.close()
+        f3.close()
+
+    def visualize(self, query):
+
+        keywords = query.split(" ")
+
+        show1 = open("./output/show1.txt", "w", encoding="utf-8")
+        show2 = open("./output/show2.txt", "w", encoding="utf-8")
+        show3 = open("./output/show3.txt", "w", encoding="utf-8")
+
+        result1 = open("./output/result1.txt", "r", encoding="utf-8")
+        result2 = open("./output/result2.txt", "r", encoding="utf-8")
+        result3 = open("./output/result3.txt", "r", encoding="utf-8")
+
+        lines1 = result1.readlines()
+        lines2 = result2.readlines()
+        lines3 = result3.readlines()
+
+        result1.close()
+        result2.close()
+        result3.close()
+
+        for line in lines1:
+            if "http://" not in line and "https://" not in line:
+                line = self.highlight_digits(line)
+                for keyword in keywords:
+                    line = self.highlight_keywords(line, keyword)
+                show1.write(line)
+
+        for line in lines2:
+            if "http://" not in line and "https://" not in line:
+                line = self.highlight_digits(line)
+                for keyword in keywords:
+                    line = self.highlight_keywords(line, keyword)
+                show2.write(line)
+
+        for line in lines3:
+            if "http://" not in line and "https://" not in line:
+                line = self.highlight_digits(line)
+                for keyword in keywords:
+                    line = self.highlight_keywords(line, keyword)
+                show3.write(line)
+
+        show1.close()
+        show2.close()
+        show3.close()
+
+    @staticmethod
+    def highlight_keywords(text, keyword):
+        replacement = "\033[91m" + keyword + "\033[39m"
+        text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
+        return text
+
+    @staticmethod
+    def highlight_digits(text):
+        keywords = re.findall(r"[0-9]+", text)
+        for keyword in keywords:
+            replacement = "\033[92m" + keyword + "\033[39m"
+            text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
+        return text
 
 
 if __name__ == '__main__':
     root = Tk()
     root.title("Клевер")
-    client = app(root)
+    app(root)
     root.mainloop()
