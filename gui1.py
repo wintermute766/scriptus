@@ -120,6 +120,7 @@ class GuiPart:
     def __init__(self, master, queue, ocr, search, endCommand, area):
 
         self.queue = queue
+        self.search = search
 
         self.txt1 = StringVar()
         self.txt1.set('empty')
@@ -130,6 +131,7 @@ class GuiPart:
 
         self.row = Frame(master)
         self.ent = Entry(self.row)
+        self.ent.focus_set()
         self.status1 = Label(self.row, textvariable=self.txt1, fg='red')
         self.status2 = Label(self.row, textvariable=self.txt2, fg='red')
         self.status3 = Label(self.row, textvariable=self.txt3, fg='red')
@@ -139,31 +141,19 @@ class GuiPart:
         self.status2.pack(side=LEFT)
         self.status3.pack(side=LEFT)
 
-        self.b1 = Button(
-            master,
-            text='Screenshot',
-            command=(
-                lambda: ocr(
-                    filename,
-                    area)))
+        self.b1 = Button(master, text='Screenshot', command=(lambda: ocr(filename, area)))
         self.b1.pack(side=LEFT, padx=5, pady=5)
 
-        self.b2 = Button(
-            master, text='Search', command=(
-                lambda: search(filename, self.ent.get(), queue)))
+        self.b2 = Button(master, text='Search', command=(lambda: search(filename, self.ent.get(), queue)))
         self.b2.pack(side=LEFT, padx=5, pady=5)
 
         self.b3 = Button(master, text='Show')
         self.b3.pack(side=LEFT, padx=5, pady=5)
 
-        self.b4 = Button(
-            master, text='Clear files', command=(
-                lambda: queue.put("wipe")))
+        self.b4 = Button(master, text='Clear files', command=(lambda: queue.put("wipe")))
         self.b4.pack(side=LEFT, padx=5, pady=5)
 
-        self.b5 = Button(
-            master, text='Clear text', command=(
-                lambda: queue.put("clear")))
+        self.b5 = Button(master, text='Clear text', command=(lambda: queue.put("clear")))
         self.b5.pack(side=LEFT, padx=5, pady=5)
 
         self.b6 = Button(master, text='Exit', command=endCommand)
@@ -203,6 +193,8 @@ class GuiPart:
                     self.status3.configure(textvariable=self.txt3, fg='red')
                 if msg == 'clear':
                     self.ent.delete(0, 'end')
+                if msg == "enter_to_search":
+                    self.search(filename, self.ent.get(), self.queue)
             except queue.Empty:
                 pass
 
@@ -211,6 +203,7 @@ class app:
     def __init__(self, master):
         self.master = master
         self.queue = queue.Queue()
+        root.bind('<Return>', lambda e=self: self.queue.put("enter_to_search"))
         self.gui = GuiPart(
             master,
             self.queue,
@@ -235,6 +228,5 @@ class app:
 if __name__ == '__main__':
     root = Tk()
     root.title("Клевер")
-    # root.bind('<Return>', (lambda event, e=ents: fetch(e)))
     client = app(root)
     root.mainloop()
