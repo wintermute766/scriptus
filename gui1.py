@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
+import queue
+import subprocess
+import threading
+import time
 from tkinter import *
 
-import time
-import threading
-import queue
-import os
-import sys
 from PIL import Image
-import subprocess
-import time
 
 filename = "./output/answer"
 
@@ -47,7 +44,7 @@ def screenshot_and_preprocess(filename, area):
     subprocess.call([image_command_1.format(filename)], shell=True)
     subprocess.call([image_command_2.format(filename, filename)], shell=True)
     im = Image.open(filename + ".png")
-    #print(im.format, "%dx%d" % im.size, im.mode)
+    # print(im.format, "%dx%d" % im.size, im.mode)
     toPaste = Image.new("L", (960, 45), "white")
     box1 = (0, 105, 960, 150)
     box2 = (0, 255, 960, 300)
@@ -84,7 +81,7 @@ def search_query(filename, input, queue):
                     queue,
                     "success1")))
         thread1.start()
-        #thread1.join()
+        # thread1.join()
 
         thread2 = threading.Thread(
             target=(
@@ -95,7 +92,7 @@ def search_query(filename, input, queue):
                     queue,
                     "success2")))
         thread2.start()
-        #thread2.join()
+        # thread2.join()
 
         thread3 = threading.Thread(
             target=(
@@ -115,8 +112,7 @@ def search_query(filename, input, queue):
 
 
 def perform_search(input, query, result, queue, msg):
-    subprocess.call(["BROWSER=w3m googler --np -n 15 " +
-                     input + " " + query], shell=True, stdout=result)
+    subprocess.call(["BROWSER=w3m googler --np -n 15 " + input + " " + query], shell=True, stdout=result)
     queue.put(msg)
 
 
@@ -160,11 +156,18 @@ class GuiPart:
         self.b3 = Button(master, text='Show')
         self.b3.pack(side=LEFT, padx=5, pady=5)
 
-        self.b4 = Button(master, text='Clear', command=(lambda: queue.put("wipe")))
+        self.b4 = Button(
+            master, text='Clear files', command=(
+                lambda: queue.put("wipe")))
         self.b4.pack(side=LEFT, padx=5, pady=5)
 
-        self.b5 = Button(master, text='Exit', command=endCommand)
-        self.b5.pack(side=RIGHT, padx=5, pady=5)
+        self.b5 = Button(
+            master, text='Clear text', command=(
+                lambda: queue.put("clear")))
+        self.b5.pack(side=LEFT, padx=5, pady=5)
+
+        self.b6 = Button(master, text='Exit', command=endCommand)
+        self.b6.pack(side=RIGHT, padx=5, pady=5)
 
     def processIncoming(self, master):
         while self.queue.qsize():
@@ -183,9 +186,12 @@ class GuiPart:
                     f1 = open("./output/result1.txt", "w")
                     f2 = open("./output/result2.txt", "w")
                     f3 = open("./output/result3.txt", "w")
-                    f1.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    f2.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-                    f3.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    f1.write(
+                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    f2.write(
+                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                    f3.write(
+                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
                     f1.close()
                     f2.close()
                     f3.close()
@@ -195,6 +201,8 @@ class GuiPart:
                     self.status1.configure(textvariable=self.txt1, fg='red')
                     self.status2.configure(textvariable=self.txt2, fg='red')
                     self.status3.configure(textvariable=self.txt3, fg='red')
+                if msg == 'clear':
+                    self.ent.delete(0, 'end')
             except queue.Empty:
                 pass
 
@@ -209,7 +217,8 @@ class app:
             ocr,
             search_query,
             self.endApplication,
-            "train")
+            "train"
+        )
         self.running = 1
         self.periodicCall()
 
@@ -226,6 +235,6 @@ class app:
 if __name__ == '__main__':
     root = Tk()
     root.title("Клевер")
-    #root.bind('<Return>', (lambda event, e=ents: fetch(e)))
+    # root.bind('<Return>', (lambda event, e=ents: fetch(e)))
     client = app(root)
     root.mainloop()

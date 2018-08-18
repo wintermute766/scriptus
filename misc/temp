@@ -1,5 +1,7 @@
 python3 script.py "bioshock" 2>/dev/null
 
+autopep8 --in-place --aggressive --aggressive installer.py
+
 #!/bin/bash
 # Dependencies: tesseract-ocr imagemagick scrot
 
@@ -17,7 +19,7 @@ tesseract -l rus $SCR_IMG.png $SCR_IMG &> /dev/null
 cat $SCR_IMG.txt
 exit
 
-'''
+
 subprocess.call(["scrot -s -q 100 question.png &"] , shell=True)
 
 subprocess.call(["xdotool mousemove 20 200"], shell=True)
@@ -50,6 +52,3 @@ with open("question.txt","r+") as f:
     f.write(newcontents)
     print newcontents
     f.close()
-'''
-
-autopep8 --in-place --aggressive --aggressive installer.py
