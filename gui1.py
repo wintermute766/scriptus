@@ -71,7 +71,7 @@ class GuiPart:
                          command=(lambda: search(self.filename.get(), self.query.get(), queue)))
         self.b2.pack(side=LEFT, padx=5, pady=5)
 
-        self.b3 = Button(self.row2, text='Show', command=(lambda: visualize(self.query.get())))
+        self.b3 = Button(self.row2, text='Show', command=(lambda: visualize(self.filename.get(), self.query.get())))
         self.b3.pack(side=LEFT, padx=5, pady=5)
 
         # row 3
@@ -224,9 +224,14 @@ class app:
         f2.close()
         f3.close()
 
-    def visualize(self, query):
+    def visualize(self, filename, query):
 
         keywords = query.split(" ")
+
+        with open(filename + ".txt", "r") as f:
+            contents = f.read()
+            ans = contents.split("\n")
+        f.close()
 
         show1 = open("./output/show1.txt", "w", encoding="utf-8")
         show2 = open("./output/show2.txt", "w", encoding="utf-8")
@@ -244,40 +249,64 @@ class app:
         result2.close()
         result3.close()
 
+        count = 0
+
         for line in lines1:
             if "http://" not in line and "https://" not in line:
-                line = self.highlight_digits(line)
                 for keyword in keywords:
-                    line = self.highlight_keywords(line, keyword)
+                    res = self.highlight_keywords(line, keyword, "\033[91m")
+                    line = res[0]
+                    count = count + res[1]
+                for answer in ans:
+                    res = self.highlight_keywords(line, answer, "\033[95m")
+                    line = res[0]
+                    count = count + res[1]
                 show1.write(line)
+        print(count)
+        count = 0
 
         for line in lines2:
             if "http://" not in line and "https://" not in line:
                 line = self.highlight_digits(line)
                 for keyword in keywords:
-                    line = self.highlight_keywords(line, keyword)
+                    res = self.highlight_keywords(line, keyword, "\033[91m")
+                    line = res[0]
+                    count = count + res[1]
+                for answer in ans:
+                    res = self.highlight_keywords(line, answer, "\033[95m")
+                    line = res[0]
+                    count = count + res[1]
                 show2.write(line)
+        print(count)
+        count = 0
 
         for line in lines3:
             if "http://" not in line and "https://" not in line:
                 line = self.highlight_digits(line)
                 for keyword in keywords:
-                    line = self.highlight_keywords(line, keyword)
+                    res = self.highlight_keywords(line, keyword, "\033[91m")
+                    line = res[0]
+                    count = count + res[1]
+                for answer in ans:
+                    res = self.highlight_keywords(line, answer, "\033[95m")
+                    line = res[0]
+                    count = count + res[1]
                 show3.write(line)
+        print(count)
 
         show1.close()
         show2.close()
         show3.close()
 
     @staticmethod
-    def highlight_keywords(text, keyword):
-        replacement = "\033[91m" + keyword + "\033[39m"
-        text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
+    def highlight_keywords(text, keyword, color):
+        replacement = color + keyword + "\033[39m"
+        text = re.subn(re.escape(keyword), replacement, text, flags=re.I)
         return text
 
     @staticmethod
     def highlight_digits(text):
-        keywords = re.findall(r"[0-9]+", text)
+        keywords = re.findall("\d\d\d\d", text)
         for keyword in keywords:
             replacement = "\033[92m" + keyword + "\033[39m"
             text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
