@@ -190,17 +190,11 @@ class app:
             flag = False
             for line in contents:
                 if ("Question" not in line) and (not flag):
+                    line = line.replace('\n', ' ')
                     f.write(line)
-                if ("?" in line):
+                if "?" in line:
                     flag = True
             f.truncate()
-            f.close()
-
-        with open("output/question.txt", "r+") as f:
-            contents = f.read()
-            f.seek(0)
-            newcontents = contents.replace('\n', ' ')
-            f.write(newcontents)
             f.close()
 
     def ocr_only(self, filename):
