@@ -235,7 +235,7 @@ class app:
 
     @staticmethod
     def perform_search(input, query, result, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + '"' + query + '"'], shell=True,
+        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True,
                         stdout=result)
         queue.put(msg)
 
@@ -331,16 +331,22 @@ class app:
     @staticmethod
     def highlight_keywords(text, keyword, color):
         replacement = color + keyword + "\033[39m"
+        # text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
         text = re.subn(re.escape(keyword), replacement, text, flags=re.I)
         return text
 
     @staticmethod
     def highlight_digits(text):
-        keywords = re.findall("\d\d\d", text)
-        # keywords = keywords + re.findall("\d\d\d", text)
+        keywords = re.findall(r"\d", text)
+        keywords = keywords + re.findall(r"\d\d", text)
+        keywords = keywords + re.findall(r"\d\d\d", text)
+        keywords = keywords + re.findall(r"\d\d\d\d", text)
+        keywords = keywords + re.findall(r"\d\d\d\d\d", text)
+        keywords = keywords + re.findall(r"\d\d\d\d\d\d", text)
+        keywords = keywords + re.findall(r"\d\d\d\d\d\d\d", text)
         for keyword in keywords:
             replacement = "\033[92m" + keyword + "\033[39m"
-            text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
+            text = re.sub(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
         return text
 
 
