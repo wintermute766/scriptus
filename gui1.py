@@ -133,7 +133,7 @@ class app:
                            self.visualize,
                            self.wipe,
                            self.end_application,
-                           "train"
+                           "real"
                            )
         self.running = 1
         self.periodic_call()
@@ -214,11 +214,14 @@ class app:
         queue.put(msg)
 
     def wipe(self):
-        f1 = open("./output/result1.txt", "w")
-        f2 = open("./output/result2.txt", "w")
-        f3 = open("./output/result3.txt", "w")
+        f1 = open("./output/show1.txt", "w")
+        f2 = open("./output/show2.txt", "w")
+        f3 = open("./output/show3.txt", "w")
+        f1.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         f1.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         f2.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        f2.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        f3.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         f3.write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         f1.close()
         f2.close()
@@ -253,6 +256,7 @@ class app:
 
         for line in lines1:
             if "http://" not in line and "https://" not in line:
+                line = self.highlight_digits(line)
                 for keyword in keywords:
                     res = self.highlight_keywords(line, keyword, "\033[91m")
                     line = res[0]
@@ -306,7 +310,8 @@ class app:
 
     @staticmethod
     def highlight_digits(text):
-        keywords = re.findall("\d\d\d\d", text)
+        keywords = re.findall("\d\d\d", text)
+        # keywords = keywords + re.findall("\d\d\d", text)
         for keyword in keywords:
             replacement = "\033[92m" + keyword + "\033[39m"
             text = re.sub(re.escape(keyword), replacement, text, flags=re.I)
