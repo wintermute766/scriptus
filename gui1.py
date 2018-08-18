@@ -202,7 +202,7 @@ class app:
 
     def shot_and_ocr(self, filename, area):
         self.screenshot_and_preprocess(filename, area)
-        self.screenshot_answer(filename)
+        # self.screenshot_answer(filename)
         subprocess.call([ocr_command.format(filename, filename)], shell=True)
 
     def search_query(self, filename, input, queue):
@@ -235,10 +235,12 @@ class app:
 
     @staticmethod
     def perform_search(input, query, result, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=result)
+        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + '"' + query + '"'], shell=True,
+                        stdout=result)
         queue.put(msg)
 
-    def wipe(self):
+    @staticmethod
+    def wipe():
         f1 = open("./output/show1.txt", "w")
         f2 = open("./output/show2.txt", "w")
         f3 = open("./output/show3.txt", "w")
@@ -261,6 +263,8 @@ class app:
             ans = contents.split("\n")
         f.close()
 
+        ans = ans[:3]
+
         show1 = open("./output/show1.txt", "w", encoding="utf-8")
         show2 = open("./output/show2.txt", "w", encoding="utf-8")
         show3 = open("./output/show3.txt", "w", encoding="utf-8")
@@ -277,7 +281,7 @@ class app:
         result2.close()
         result3.close()
 
-        count = 0
+        count = [0, 0, 0]
 
         for line in lines1:
             if "http://" not in line and "https://" not in line:
@@ -285,14 +289,12 @@ class app:
                 for keyword in keywords:
                     res = self.highlight_keywords(line, keyword, "\033[91m")
                     line = res[0]
-                    count = count + res[1]
+                    #count[0] = count[0] + res[1]
                 for answer in ans:
                     res = self.highlight_keywords(line, answer, "\033[95m")
                     line = res[0]
-                    count = count + res[1]
+                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
                 show1.write(line)
-        print(count)
-        count = 0
 
         for line in lines2:
             if "http://" not in line and "https://" not in line:
@@ -300,14 +302,12 @@ class app:
                 for keyword in keywords:
                     res = self.highlight_keywords(line, keyword, "\033[91m")
                     line = res[0]
-                    count = count + res[1]
+                    #count[1] = count[1] + res[1]
                 for answer in ans:
                     res = self.highlight_keywords(line, answer, "\033[95m")
                     line = res[0]
-                    count = count + res[1]
+                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
                 show2.write(line)
-        print(count)
-        count = 0
 
         for line in lines3:
             if "http://" not in line and "https://" not in line:
@@ -315,12 +315,13 @@ class app:
                 for keyword in keywords:
                     res = self.highlight_keywords(line, keyword, "\033[91m")
                     line = res[0]
-                    count = count + res[1]
+                    #count[2] = count[2] + res[1]
                 for answer in ans:
                     res = self.highlight_keywords(line, answer, "\033[95m")
                     line = res[0]
-                    count = count + res[1]
+                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
                 show3.write(line)
+
         print(count)
 
         show1.close()
