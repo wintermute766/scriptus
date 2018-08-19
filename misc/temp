@@ -2,6 +2,9 @@ python3 script.py "bioshock" 2>/dev/null
 
 autopep8 --in-place --aggressive --aggressive installer.py
 
+target = pytesseract.image_to_string(image, lang='eng', boxes=False, \
+        config='--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789')
+
 #!/bin/bash
 # Dependencies: tesseract-ocr imagemagick scrot
 

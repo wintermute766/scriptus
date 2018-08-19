@@ -3,14 +3,15 @@ import queue
 import subprocess
 import threading
 import time
+import pytesseract
 from tkinter import *
 
 from PIL import Image
 
 coords_real_1 = "40 320"
-coords_real_2 = "360 460"
+coords_real_2 = "310 460"
 coords_train_1 = "40 340"
-coords_train_2 = "360 480"
+coords_train_2 = "310 480"
 
 command_move = "xdotool mousemove {}"
 command_down = "xdotool mousedown 1"
@@ -64,7 +65,7 @@ class GuiPart:
 
         self.row2.pack(fill=X, padx=5, pady=5)
 
-        self.b1 = Button(self.row2, text='Screenshot', command=(lambda: ocr(self.filename.get(), area)))
+        self.b1 = Button(self.row2, text='Screenshot', command=(lambda: ocr(self.filename.get(), area, queue)))
         self.b1.pack(side=LEFT, padx=5, pady=5)
 
         self.b2 = Button(self.row2, text='Search',
@@ -115,6 +116,8 @@ class GuiPart:
                 if msg == 'clear':
                     self.query.delete(0, 'end')
                 if msg == "enter_to_search":
+                    self.search(self.filename.get(), self.query.get(), self.queue)
+                if msg == "ocr_success":
                     self.search(self.filename.get(), self.query.get(), self.queue)
             except queue.Empty:
                 pass
@@ -198,12 +201,21 @@ class app:
             f.close()
 
     def ocr_only(self, filename):
-        subprocess.call([ocr_command.format(filename, filename)], shell=True)
+        #subprocess.call([ocr_command.format(filename, filename)], shell=True)
+        text = pytesseract.image_to_string(Image.open(filename+".png"), lang='rus+eng')
+        with open(filename + ".txt", "w") as f:
+            f.write(text)
+            f.close()
 
-    def shot_and_ocr(self, filename, area):
+    def shot_and_ocr(self, filename, area, queue):
         self.screenshot_and_preprocess(filename, area)
         # self.screenshot_answer(filename)
-        subprocess.call([ocr_command.format(filename, filename)], shell=True)
+        # subprocess.call([ocr_command.format(filename, filename)], shell=True)
+        text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
+        with open(filename + ".txt", "w") as f:
+            f.write(text)
+            f.close()
+            queue.put("ocr_success")
 
     def search_query(self, filename, input, queue):
         with open(filename + ".txt", "r+") as f:
@@ -235,8 +247,7 @@ class app:
 
     @staticmethod
     def perform_search(input, query, result, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True,
-                        stdout=result)
+        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=result)
         queue.put(msg)
 
     @staticmethod
