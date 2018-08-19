@@ -337,8 +337,8 @@ class app:
 
     @staticmethod
     def highlight_digits(text):
-        keywords = re.findall(r"\d", text)
-        keywords = keywords + re.findall(r"\d\d", text)
+        keywords = re.findall(r"\d\d", text)
+        keywords = keywords + re.findall(r"\d", text)
         keywords = keywords + re.findall(r"\d\d\d", text)
         keywords = keywords + re.findall(r"\d\d\d\d", text)
         keywords = keywords + re.findall(r"\d\d\d\d\d", text)
