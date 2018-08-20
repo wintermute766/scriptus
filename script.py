@@ -71,7 +71,10 @@ class GuiPart:
         self.b2.pack(side=LEFT, padx=5, pady=5)
 
         self.b3 = Button(self.row2, text='Show', command=(lambda: visualize(self.filename.get(), self.query.get())))
-        self.b3.pack(side=LEFT, padx=5, pady=5)
+        self.b3.pack(side=RIGHT, padx=5, pady=5)
+
+        self.b6 = Button(self.row2, text='OCR', command=(lambda: ocr_only(self.filename.get(), queue)))
+        self.b6.pack(side=RIGHT, padx=5, pady=5)
 
         # row 3
 
@@ -86,9 +89,6 @@ class GuiPart:
 
         self.b5 = Button(self.row3, text='Clear text', command=(lambda: queue.put("clear")))
         self.b5.pack(side=LEFT, padx=5, pady=5)
-
-        self.b6 = Button(self.row3, text='OCR', command=(lambda: ocr_only(self.filename.get(), queue)))
-        self.b6.pack(side=RIGHT, padx=5, pady=5)
 
     def processIncoming(self):
         while self.queue.qsize():
