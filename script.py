@@ -128,11 +128,11 @@ class app:
         self.root.bind('<Return>', lambda e=self: self.queue.put("enter_to_search"))
         self.gui = GuiPart(self.root,
                            self.queue,
-                           self.shot_and_ocr,
-                           self.ocr_only,
-                           self.search_query,
-                           self.visualize,
-                           self.wipe,
+                           self.do_shot_and_ocr,
+                           self.do_ocr_only,
+                           self.do_search,
+                           self.do_visualize,
+                           self.do_wipe,
                            self.end_application,
                            area
                            )
@@ -196,36 +196,35 @@ class app:
                 if "?" in line:
                     flag = True
             f.truncate()
-            f.close()
 
-    def ocr_only(self, filename, queue):
-        self.do_ocr(filename, queue)
+    def do_ocr_only(self, filename, queue):
+        self.ocr(filename, queue)
 
-    def shot_and_ocr(self, filename, area, queue):
+    def do_shot_and_ocr(self, filename, area, queue):
         self.screenshot_and_preprocess(filename, area)
         # self.screenshot_answer(filename)
-        self.do_ocr(filename, queue)
+        self.ocr(filename, queue)
 
     @staticmethod
-    def do_ocr(filename, queue):
+    def ocr(filename, queue):
         text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
         with open(filename + ".txt", "w") as f:
             f.write(text)
-            f.close()
         with open(filename + ".txt", "r") as f:
             contents = f.read()
-            f.close()
         with open(filename + ".txt", "w") as f:
             contents = re.sub(re.escape("\n\n"), "\n", contents, flags=re.I)
             contents = re.sub(re.escape("\n \n"), "\n", contents, flags=re.I)
             f.write(contents)
-            f.close()
             queue.put("ocr_success")
+
+    def do_search(self, filename, input, queue):
+        self.search_query(filename, input, queue)
+        self.do_visualize(filename, input)
 
     def search_query(self, filename, input, queue):
         with open(filename + ".txt", "r") as f:
             contents = f.read()
-            f.close()
         ans = contents.split("\n")
 
         result1 = open("./output/result1.txt", "w", encoding="utf-8")
@@ -240,18 +239,19 @@ class app:
         thread3.start()
 
         thread1.join()
-
         result1.close()
+        thread2.join()
         result2.close()
+        thread3.join()
         result3.close()
 
     @staticmethod
-    def perform_search(input, query, result, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=result)
+    def perform_search(input, query, file, queue, msg):
+        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=file)
         queue.put(msg)
 
     @staticmethod
-    def wipe():
+    def do_wipe():
         f1 = open("./output/show1.txt", "w")
         f2 = open("./output/show2.txt", "w")
         f3 = open("./output/show3.txt", "w")
@@ -265,17 +265,16 @@ class app:
         f2.close()
         f3.close()
 
-    def visualize(self, filename, query):
+    def do_visualize(self, filename, input):
 
-        if query == "":
+        if input == "":
             keywords = " "
         else:
-            keywords = query.split(" ")
+            keywords = input.split(" ")
 
         with open(filename + ".txt", "r") as f:
             contents = f.read()
             ans = contents.split("\n")
-            f.close()
 
         ans = ans[:3]
 
@@ -297,9 +296,9 @@ class app:
 
         count = [0, 0, 0]
 
-        self.do_highlight(ans, keywords, lines1, show1, count)
-        self.do_highlight(ans, keywords, lines2, show2, count)
-        self.do_highlight(ans, keywords, lines3, show3, count)
+        self.highlight(ans, keywords, lines1, show1, count)
+        self.highlight(ans, keywords, lines2, show2, count)
+        self.highlight(ans, keywords, lines3, show3, count)
 
         print(count)
 
@@ -307,7 +306,7 @@ class app:
         show2.close()
         show3.close()
 
-    def do_highlight(self, ans, keywords, lines, show, count):
+    def highlight(self, ans, keywords, lines, show, count):
         for line in lines:
             if "http://" not in line and "https://" not in line:
                 line = self.highlight_digits(line)
