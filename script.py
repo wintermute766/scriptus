@@ -309,7 +309,6 @@ class app:
     def highlight(self, ans, keywords, lines, show, count):
         for line in lines:
             if "http://" not in line and "https://" not in line:
-                line = self.highlight_digits(line)
                 if keywords != " ":
                     for keyword in keywords:
                         res = self.highlight_keywords(line, keyword, "\033[91m")
@@ -319,6 +318,7 @@ class app:
                     res = self.highlight_keywords(line, answer, "\033[95m")
                     line = res[0]
                     count[ans.index(answer)] = count[ans.index(answer)] + res[1]
+                line = self.highlight_digits(line)
                 show.write(line)
 
     @staticmethod
