@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import queue
 import subprocess
 import threading
@@ -343,6 +344,8 @@ class app:
 
 
 if __name__ == '__main__':
+    if not os.path.exists("output"):
+        os.makedirs("output")
     root = Tk()
     root.title("Клевер")
     app(root, "train")
