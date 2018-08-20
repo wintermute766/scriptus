@@ -3,15 +3,15 @@ import queue
 import subprocess
 import threading
 import time
-import pytesseract
 from tkinter import *
 
+import pytesseract
 from PIL import Image
 
 coords_real_1 = "40 320"
-coords_real_2 = "310 460"
+coords_real_2 = "300 460"
 coords_train_1 = "40 340"
-coords_train_2 = "310 480"
+coords_train_2 = "300 480"
 
 command_move = "xdotool mousemove {}"
 command_down = "xdotool mousedown 1"
@@ -20,8 +20,6 @@ command_up = "xdotool mouseup 1"
 screenshot_command = "scrot -s -q 100 {}.png &"
 image_command_1 = "mogrify -modulate 100,0 -resize 300% {}.png"
 image_command_2 = "./textcleaner {}.png {}.png"
-
-ocr_command = "tesseract -l rus+eng {}.png {}"
 
 
 class GuiPart:
@@ -68,8 +66,7 @@ class GuiPart:
         self.b1 = Button(self.row2, text='Screenshot', command=(lambda: ocr(self.filename.get(), area, queue)))
         self.b1.pack(side=LEFT, padx=5, pady=5)
 
-        self.b2 = Button(self.row2, text='Search',
-                         command=(lambda: search(self.filename.get(), self.query.get(), queue)))
+        self.b2 = Button(self.row2, text='Search', command=(lambda: search(self.filename.get(), self.query.get(), queue)))
         self.b2.pack(side=LEFT, padx=5, pady=5)
 
         self.b3 = Button(self.row2, text='Show', command=(lambda: visualize(self.filename.get(), self.query.get())))
@@ -87,9 +84,9 @@ class GuiPart:
         self.b7.pack(side=RIGHT, padx=5, pady=5)
 
         self.b5 = Button(self.row3, text='Clear text', command=(lambda: queue.put("clear")))
-        self.b5.pack(side=RIGHT, padx=5, pady=5)
+        self.b5.pack(side=LEFT, padx=5, pady=5)
 
-        self.b6 = Button(self.row3, text='OCR', command=(lambda: ocr_only(self.filename.get())))
+        self.b6 = Button(self.row3, text='OCR', command=(lambda: ocr_only(self.filename.get(), queue)))
         self.b6.pack(side=RIGHT, padx=5, pady=5)
 
     def processIncoming(self):
@@ -118,13 +115,13 @@ class GuiPart:
                 if msg == "enter_to_search":
                     self.search(self.filename.get(), self.query.get(), self.queue)
                 if msg == "ocr_success":
-                    self.search(self.filename.get(), self.query.get(), self.queue)
+                    pass
             except queue.Empty:
                 pass
 
 
 class app:
-    def __init__(self, root):
+    def __init__(self, root, area):
         self.queue = queue.Queue()
         self.root = root
         self.root.bind('<Return>', lambda e=self: self.queue.put("enter_to_search"))
@@ -136,7 +133,7 @@ class app:
                            self.visualize,
                            self.wipe,
                            self.end_application,
-                           "train"
+                           area
                            )
         self.running = 1
         self.periodic_call()
@@ -152,7 +149,8 @@ class app:
 
     # Business logic
 
-    def choose_area(self, coords1, coords2):
+    @staticmethod
+    def choose_area(coords1, coords2):
         subprocess.call([command_move.format(coords1)], shell=True)
         subprocess.call([command_down], shell=True)
         subprocess.call([command_move.format(coords2)], shell=True)
@@ -164,7 +162,7 @@ class app:
             self.choose_area(coords_train_1, coords_train_2)
         else:
             self.choose_area(coords_real_1, coords_real_2)
-        time.sleep(0.5)
+        time.sleep(0.2)
         subprocess.call([image_command_1.format(filename)], shell=True)
         subprocess.call([image_command_2.format(filename, filename)], shell=True)
         im = Image.open(filename + ".png")
@@ -182,11 +180,10 @@ class app:
         subprocess.call(["xdotool mousedown 1"], shell=True)
         subprocess.call(["xdotool mousemove 370 320"], shell=True)
         subprocess.call(["xdotool mouseup 1"], shell=True)
-        time.sleep(0.2)
+        time.sleep(0.1)
         subprocess.call(["mogrify -negate -modulate 100,0 -resize 300% output/question.png"], shell=True)
         subprocess.call(["./textcleaner output/question.png output/question.png"], shell=True)
         subprocess.call(["tesseract -l rus+eng output/question.png output/question"], shell=True)
-
         with open("output/question.txt", "r+") as f:
             contents = f.readlines()
             f.seek(0)
@@ -200,50 +197,52 @@ class app:
             f.truncate()
             f.close()
 
-    def ocr_only(self, filename):
-        #subprocess.call([ocr_command.format(filename, filename)], shell=True)
-        text = pytesseract.image_to_string(Image.open(filename+".png"), lang='rus+eng')
-        with open(filename + ".txt", "w") as f:
-            f.write(text)
-            f.close()
+    def ocr_only(self, filename, queue):
+        self.do_ocr(filename, queue)
 
     def shot_and_ocr(self, filename, area, queue):
         self.screenshot_and_preprocess(filename, area)
         # self.screenshot_answer(filename)
-        # subprocess.call([ocr_command.format(filename, filename)], shell=True)
+        self.do_ocr(filename, queue)
+
+    @staticmethod
+    def do_ocr(filename, queue):
         text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
         with open(filename + ".txt", "w") as f:
             f.write(text)
             f.close()
+        with open(filename + ".txt", "r") as f:
+            contents = f.read()
+            f.close()
+        with open(filename + ".txt", "w") as f:
+            contents = re.sub(re.escape("\n\n"), "\n", contents, flags=re.I)
+            contents = re.sub(re.escape("\n \n"), "\n", contents, flags=re.I)
+            f.write(contents)
+            f.close()
             queue.put("ocr_success")
 
     def search_query(self, filename, input, queue):
-        with open(filename + ".txt", "r+") as f:
-            contents = f.read()
-            f.seek(0)
-            newcontents = contents.replace('\n\n', '\n')
-            f.write(newcontents)
-            f.close()
         with open(filename + ".txt", "r") as f:
             contents = f.read()
-            ans = contents.split("\n")
-            result1 = open("./output/result1.txt", "w", encoding="utf-8")
-            result2 = open("./output/result2.txt", "w", encoding="utf-8")
-            result3 = open("./output/result3.txt", "w", encoding="utf-8")
-
-            thread1 = threading.Thread(target=(lambda: self.perform_search(input, ans[0], result1, queue, "success1")))
-            thread1.start()
-            thread2 = threading.Thread(target=(lambda: self.perform_search(input, ans[1], result2, queue, "success2")))
-            thread2.start()
-            thread3 = threading.Thread(target=(lambda: self.perform_search(input, ans[2], result3, queue, "success3")))
-            thread3.start()
-
-            thread1.join()
-
-            result1.close()
-            result2.close()
-            result3.close()
             f.close()
+        ans = contents.split("\n")
+
+        result1 = open("./output/result1.txt", "w", encoding="utf-8")
+        result2 = open("./output/result2.txt", "w", encoding="utf-8")
+        result3 = open("./output/result3.txt", "w", encoding="utf-8")
+
+        thread1 = threading.Thread(target=(lambda: self.perform_search(input, ans[0], result1, queue, "success1")))
+        thread1.start()
+        thread2 = threading.Thread(target=(lambda: self.perform_search(input, ans[1], result2, queue, "success2")))
+        thread2.start()
+        thread3 = threading.Thread(target=(lambda: self.perform_search(input, ans[2], result3, queue, "success3")))
+        thread3.start()
+
+        thread1.join()
+
+        result1.close()
+        result2.close()
+        result3.close()
 
     @staticmethod
     def perform_search(input, query, result, queue, msg):
@@ -267,12 +266,15 @@ class app:
 
     def visualize(self, filename, query):
 
-        keywords = query.split(" ")
+        if query == "":
+            keywords = " "
+        else:
+            keywords = query.split(" ")
 
         with open(filename + ".txt", "r") as f:
             contents = f.read()
             ans = contents.split("\n")
-        f.close()
+            f.close()
 
         ans = ans[:3]
 
@@ -294,44 +296,9 @@ class app:
 
         count = [0, 0, 0]
 
-        for line in lines1:
-            if "http://" not in line and "https://" not in line:
-                line = self.highlight_digits(line)
-                for keyword in keywords:
-                    res = self.highlight_keywords(line, keyword, "\033[91m")
-                    line = res[0]
-                    # count[0] = count[0] + res[1]
-                for answer in ans:
-                    res = self.highlight_keywords(line, answer, "\033[95m")
-                    line = res[0]
-                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
-                show1.write(line)
-
-        for line in lines2:
-            if "http://" not in line and "https://" not in line:
-                line = self.highlight_digits(line)
-                for keyword in keywords:
-                    res = self.highlight_keywords(line, keyword, "\033[91m")
-                    line = res[0]
-                    # count[1] = count[1] + res[1]
-                for answer in ans:
-                    res = self.highlight_keywords(line, answer, "\033[95m")
-                    line = res[0]
-                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
-                show2.write(line)
-
-        for line in lines3:
-            if "http://" not in line and "https://" not in line:
-                line = self.highlight_digits(line)
-                for keyword in keywords:
-                    res = self.highlight_keywords(line, keyword, "\033[91m")
-                    line = res[0]
-                    # count[2] = count[2] + res[1]
-                for answer in ans:
-                    res = self.highlight_keywords(line, answer, "\033[95m")
-                    line = res[0]
-                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
-                show3.write(line)
+        self.do_highlight(ans, keywords, lines1, show1, count)
+        self.do_highlight(ans, keywords, lines2, show2, count)
+        self.do_highlight(ans, keywords, lines3, show3, count)
 
         print(count)
 
@@ -339,11 +306,25 @@ class app:
         show2.close()
         show3.close()
 
+    def do_highlight(self, ans, keywords, lines, show, count):
+        for line in lines:
+            if "http://" not in line and "https://" not in line:
+                line = self.highlight_digits(line)
+                if keywords != " ":
+                    for keyword in keywords:
+                        res = self.highlight_keywords(line, keyword, "\033[91m")
+                        line = res[0]
+                        # count[0] = count[0] + res[1]
+                for answer in ans:
+                    res = self.highlight_keywords(line, answer, "\033[95m")
+                    line = res[0]
+                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
+                show.write(line)
+
     @staticmethod
     def highlight_keywords(text, keyword, color):
         replacement = color + keyword + "\033[39m"
-        # text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
-        text = re.subn(re.escape(keyword), replacement, text, flags=re.I)
+        text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
         return text
 
     @staticmethod
@@ -364,5 +345,5 @@ class app:
 if __name__ == '__main__':
     root = Tk()
     root.title("Клевер")
-    app(root)
+    app(root, "train")
     root.mainloop()
