@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/misc/TODO" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/questions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/answer5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questions" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/script.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/misc/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/questions" beforeDir="false" afterPath="$PROJECT_DIR$/misc/questions" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,22 +36,23 @@
           <entry key="gitignore" value="1" />
           <entry key="py" value="972" />
           <entry key="temp" value="2" />
-          <entry key="txt" value="82" />
+          <entry key="txt" value="101" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="PLAIN_TEXT" value="127" />
+          <entry key="PLAIN_TEXT" value="146" />
           <entry key="Python" value="972" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="TODO" value="1" />
+          <entry key="TODO" value="2" />
           <entry key="gitignore" value="2" />
           <entry key="png" value="12" />
           <entry key="py" value="2" />
+          <entry key="questions" value="1" />
           <entry key="temp" value="1" />
         </counts>
       </usages-collector>
@@ -61,7 +60,7 @@
         <counts>
           <entry key="Bash" value="1" />
           <entry key="Image" value="12" />
-          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="PLAIN_TEXT" value="5" />
           <entry key="Python" value="2" />
         </counts>
       </usages-collector>
@@ -72,8 +71,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="216" column="60" selection-start-line="216" selection-start-column="60" selection-end-line="216" selection-end-column="60" />
+            <state relative-caret-position="301">
+              <caret line="253" column="18" lean-forward="true" selection-start-line="253" selection-start-column="18" selection-end-line="253" selection-end-column="18" />
               <folding>
                 <marker date="1534776055693" expanded="true" signature="8237:8336" ph="..." />
                 <marker date="1534776055693" expanded="true" signature="8331:8336" ph="..." />
@@ -331,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534772812884</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="bugfix and refactor">
+      <created>1534776398458</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1534776398458</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -342,12 +348,12 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.34624144" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34624144" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.44191343" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.29954442" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.75056946" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32915717" />
@@ -424,7 +430,8 @@
     <MESSAGE value="bugfix" />
     <MESSAGE value="refactor" />
     <MESSAGE value="directory creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="directory creation" />
+    <MESSAGE value="bugfix and refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix and refactor" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/17.08.18/answer5.png" />
@@ -459,10 +466,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/misc/questions">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/misc/TODO">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="216" column="60" selection-start-line="216" selection-start-column="60" selection-end-line="216" selection-end-column="60" />
+        <state relative-caret-position="301">
+          <caret line="253" column="18" lean-forward="true" selection-start-line="253" selection-start-column="18" selection-end-line="253" selection-end-column="18" />
           <folding>
             <marker date="1534776055693" expanded="true" signature="8237:8336" ph="..." />
             <marker date="1534776055693" expanded="true" signature="8331:8336" ph="..." />
