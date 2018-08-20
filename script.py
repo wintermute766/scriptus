@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+import pathlib
 import queue
 import subprocess
 import threading
@@ -344,8 +344,7 @@ class app:
 
 
 if __name__ == '__main__':
-    if not os.path.exists("output"):
-        os.makedirs("output")
+    pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
     app(root, "train")
