@@ -9,10 +9,21 @@ from tkinter import *
 import pytesseract
 from PIL import Image
 
+# import nltk
+# nltk.download("stopwords")
+from nltk.corpus import stopwords
+from pymystem3 import Mystem
+from string import punctuation
+
 coords_real_1 = "40 320"
 coords_real_2 = "300 460"
 coords_train_1 = "40 340"
 coords_train_2 = "300 480"
+
+coords_q_real_1 = "40 320"
+coords_q_real_2 = "300 460"
+coords_q_train_1 = "20 200"
+coords_q_train_2 = "370 320"
 
 command_move = "xdotool mousemove {}"
 command_down = "xdotool mousedown 1"
@@ -22,9 +33,23 @@ screenshot_command = "scrot -s -q 100 {}.png &"
 image_command_1 = "mogrify -modulate 100,0 -resize 300% {}.png"
 image_command_2 = "./textcleaner {}.png {}.png"
 
+mystem = Mystem()
+russian_stopwords = stopwords.words("russian")
+
+
+def preprocess_text(text):
+    tokens = mystem.lemmatize(text.lower())
+    tokens = [token for token in tokens if token not in russian_stopwords
+              and token != " "
+              and token.strip() not in punctuation]
+
+    text = " ".join(tokens)
+
+    return text
+
 
 class GuiPart:
-    def __init__(self, root, queue, ocr, ocr_only, search, visualize, wipe, end_command, area):
+    def __init__(self, root, queue, ocr, ocr_only, search, auto_search, visualize, wipe, end_command, area):
 
         self.queue = queue
         self.search = search
@@ -75,6 +100,9 @@ class GuiPart:
 
         self.b6 = Button(self.row2, text='OCR', command=(lambda: ocr_only(self.filename.get(), queue)))
         self.b6.pack(side=RIGHT, padx=5, pady=5)
+
+        self.b8 = Button(self.row2, text='Auto', command=(lambda: auto_search(self.filename.get(), area, queue)))
+        self.b8.pack(side=LEFT, padx=5, pady=5)
 
         # row 3
 
@@ -131,6 +159,7 @@ class app:
                            self.do_shot_and_ocr,
                            self.do_ocr_only,
                            self.do_search,
+                           self.do_auto_search,
                            self.do_visualize,
                            self.do_wipe,
                            self.end_application,
@@ -175,34 +204,34 @@ class app:
         im.paste(toPaste, box2)
         im.save(filename + ".png")
 
-    def screenshot_answer(self, filename):
-        subprocess.call(["scrot -s -q 100 output/question.png &"], shell=True)
-        subprocess.call(["xdotool mousemove 20 200"], shell=True)
-        subprocess.call(["xdotool mousedown 1"], shell=True)
-        subprocess.call(["xdotool mousemove 370 320"], shell=True)
-        subprocess.call(["xdotool mouseup 1"], shell=True)
-        time.sleep(0.1)
-        subprocess.call(["mogrify -negate -modulate 100,0 -resize 300% output/question.png"], shell=True)
-        subprocess.call(["./textcleaner output/question.png output/question.png"], shell=True)
-        subprocess.call(["tesseract -l rus+eng output/question.png output/question"], shell=True)
-        with open("output/question.txt", "r+") as f:
-            contents = f.readlines()
-            f.seek(0)
+    def screenshot_answer(self, area):
+        filename = "output/question"
+        subprocess.call([screenshot_command.format(filename)], shell=True)
+        if area == "train":
+            self.choose_area(coords_q_train_1, coords_q_train_2)
+        else:
+            self.choose_area(coords_q_real_1, coords_q_real_2)
+        time.sleep(0.2)
+        subprocess.call(["mogrify -negate -modulate 100,0 -resize 300% " + filename + ".png"], shell=True)
+        subprocess.call([image_command_2.format(filename, filename)], shell=True)
+        text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
+        lines = text.split("\n")
+        question = ""
+        with open(filename + ".txt", "w") as f:
             flag = False
-            for line in contents:
+            for line in lines:
                 if ("Question" not in line) and (not flag):
-                    line = line.replace('\n', ' ')
-                    f.write(line)
+                    question = question + " " + line
                 if "?" in line:
                     flag = True
             f.truncate()
+            f.write(question)
 
     def do_ocr_only(self, filename, queue):
         self.ocr(filename, queue)
 
     def do_shot_and_ocr(self, filename, area, queue):
         self.screenshot_and_preprocess(filename, area)
-        # self.screenshot_answer(filename)
         self.ocr(filename, queue)
 
     @staticmethod
@@ -221,6 +250,15 @@ class app:
     def do_search(self, filename, input, queue):
         self.search_query(filename, input, queue)
         self.do_visualize(filename, input)
+
+    def do_auto_search(self, filename, area, queue):
+        self.do_shot_and_ocr(filename, area, queue)
+        self.screenshot_answer(area)
+        with open("output/question.txt", "r") as f:
+            contents = f.read()
+            contents = preprocess_text(contents)
+        self.search_query(filename, contents, queue)
+        self.do_visualize(filename, contents)
 
     def search_query(self, filename, input, queue):
         with open(filename + ".txt", "r") as f:
@@ -247,7 +285,7 @@ class app:
 
     @staticmethod
     def perform_search(input, query, file, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 15 " + input + " " + query], shell=True, stdout=file)
+        subprocess.call(["BROWSER=w3m googler -C --np -n 8 " + input + " " + query], shell=True, stdout=file)
         queue.put(msg)
 
     @staticmethod
@@ -271,12 +309,29 @@ class app:
             keywords = " "
         else:
             keywords = input.split(" ")
+        keywords1 = []
+        for keyword in keywords:
+            if keyword.isalpha() or keyword.isnumeric():
+                keywords1.append(keyword)
+        keywords = keywords1
+        print(keywords)
 
         with open(filename + ".txt", "r") as f:
             contents = f.read()
+            contents = contents.lower()
             ans = contents.split("\n")
-
         ans = ans[:3]
+        '''
+        for answer in ans:
+            if not answer.isnumeric():
+                ans[ans.index(answer)] = preprocess_text(answer)
+        ans1 = []
+        for answer in ans:
+            if answer.isalpha():
+                ans1.append(answer)
+        ans = ans1
+        '''
+        print(ans)
 
         show1 = open("./output/show1.txt", "w", encoding="utf-8")
         show2 = open("./output/show2.txt", "w", encoding="utf-8")
@@ -324,7 +379,10 @@ class app:
     @staticmethod
     def highlight_keywords(text, keyword, color):
         replacement = color + keyword + "\033[39m"
-        text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
+        if keyword.isnumeric():
+            text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
+        else:
+            text = re.subn(re.escape(keyword), replacement, text, flags=re.I)
         return text
 
     @staticmethod
