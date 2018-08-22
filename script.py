@@ -246,20 +246,27 @@ class app:
             queue.put("ocr_success")
 
     def do_search(self, filename, input, queue):
+        time1 = time.time()
         self.search_query(filename, input, queue)
         self.do_visualize(filename, input)
+        time2 = time.time()
+        print(time2 - time1)
 
     def do_auto_search(self, filename, area, queue):
-        time1 = time.time()
         self.do_shot_and_ocr(filename, area, queue)
+        time1 = time.time()
         self.screenshot_answer("output/question", area)
         with open("output/question.txt", "r") as f:
             contents = f.read()
             contents = preprocess_text(contents)
+        time2 = time.time()
+        print("ocr " + str(time2 - time1))
         self.search_query(filename, contents, queue)
+        time1 = time.time()
+        print("search " + str(time1 - time2))
         self.do_visualize(filename, contents)
         time2 = time.time()
-        print(time2 - time1)
+        print("visualize " + str(time2 - time1))
 
     def search_query(self, filename, input, queue):
         with open(filename + ".txt", "r") as f:
