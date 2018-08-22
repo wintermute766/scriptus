@@ -321,6 +321,12 @@ class app:
             contents = contents.lower()
             ans = contents.split("\n")
         ans = ans[:3]
+        ans[0] = ans[0].replace('«', '')
+        ans[0] = ans[0].replace('»', '')
+        ans[1] = ans[1].replace('«', '')
+        ans[1] = ans[1].replace('»', '')
+        ans[2] = ans[2].replace('«', '')
+        ans[2] = ans[2].replace('»', '')
         '''
         for answer in ans:
             if not answer.isnumeric():
@@ -379,10 +385,13 @@ class app:
     @staticmethod
     def highlight_keywords(text, keyword, color):
         replacement = color + keyword + "\033[39m"
+        '''
         if keyword.isnumeric():
             text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
         else:
             text = re.subn(re.escape(keyword), replacement, text, flags=re.I)
+        '''
+        text = re.subn(r"\b%s\b" % re.escape(keyword), replacement, text, flags=re.I)
         return text
 
     @staticmethod
