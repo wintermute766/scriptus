@@ -20,8 +20,8 @@ coords_real_2 = "300 460"
 coords_train_1 = "40 340"
 coords_train_2 = "300 480"
 
-coords_q_real_1 = "20 200"
-coords_q_real_2 = "370 320"
+coords_q_real_1 = "20 180"
+coords_q_real_2 = "370 300"
 coords_q_train_1 = "20 200"
 coords_q_train_2 = "370 320"
 
@@ -33,16 +33,15 @@ screenshot_command = "scrot -s -q 100 {}.png &"
 image_command_1 = "mogrify -modulate 100,0 -resize 300% {}.png"
 image_command_2 = "./textcleaner {}.png {}.png"
 
+mystem = Mystem()
+russian_stopwords = stopwords.words("russian")
+
 
 def preprocess_text(text):
-    mystem = Mystem()
-    russian_stopwords = stopwords.words("russian")
-
     tokens = mystem.lemmatize(text.lower())
     tokens = [token for token in tokens if token not in russian_stopwords
               and token != " "
               and token.strip() not in punctuation]
-
     text = " ".join(tokens)
 
     return text
@@ -204,8 +203,7 @@ class app:
         im.paste(toPaste, box2)
         im.save(filename + ".png")
 
-    def screenshot_answer(self, area):
-        filename = "output/question"
+    def screenshot_answer(self, filename, area):
         subprocess.call([screenshot_command.format(filename)], shell=True)
         if area == "train":
             self.choose_area(coords_q_train_1, coords_q_train_2)
@@ -252,13 +250,16 @@ class app:
         self.do_visualize(filename, input)
 
     def do_auto_search(self, filename, area, queue):
+        time1 = time.time()
         self.do_shot_and_ocr(filename, area, queue)
-        self.screenshot_answer(area)
+        self.screenshot_answer("output/question", area)
         with open("output/question.txt", "r") as f:
             contents = f.read()
             contents = preprocess_text(contents)
         self.search_query(filename, contents, queue)
         self.do_visualize(filename, contents)
+        time2 = time.time()
+        print(time2 - time1)
 
     def search_query(self, filename, input, queue):
         with open(filename + ".txt", "r") as f:
@@ -285,7 +286,7 @@ class app:
 
     @staticmethod
     def perform_search(input, query, file, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 8 " + input + " " + query], shell=True, stdout=file)
+        subprocess.call(["BROWSER=w3m googler -C --np -n 10 " + input + " " + query], shell=True, stdout=file)
         queue.put(msg)
 
     @staticmethod
