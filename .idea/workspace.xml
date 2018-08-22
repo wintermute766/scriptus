@@ -15,15 +15,15 @@
     <session id="1317076842">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="15" />
+          <entry key="project.closed" value="16" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="10" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -36,7 +36,7 @@
         <counts>
           <entry key="TODO" value="134" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="1976" />
+          <entry key="py" value="2092" />
           <entry key="temp" value="2" />
           <entry key="txt" value="125" />
         </counts>
@@ -45,7 +45,7 @@
         <counts>
           <entry key="Bash" value="2" />
           <entry key="PLAIN_TEXT" value="260" />
-          <entry key="Python" value="1976" />
+          <entry key="Python" value="2092" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -73,12 +73,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="325" column="13" selection-start-line="325" selection-start-column="13" selection-end-line="325" selection-end-column="13" />
+            <state relative-caret-position="119">
+              <caret line="314" column="41" lean-forward="true" selection-start-line="314" selection-start-column="41" selection-end-line="314" selection-end-column="41" />
               <folding>
                 <element signature="e#24#38#0" expanded="true" />
-                <marker date="1534923557247" expanded="true" signature="8924:9398" ph="..." />
-                <marker date="1534923557247" expanded="true" signature="9393:9398" ph="..." />
+                <marker date="1534930605902" expanded="true" signature="8924:9398" ph="..." />
+                <marker date="1534930605902" expanded="true" signature="9393:9398" ph="..." />
               </folding>
             </state>
           </provider>
@@ -155,17 +155,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -177,6 +166,17 @@
               <item name="scriptus" type="b2602c69:ProjectViewProjectNode" />
               <item name="scriptus" type="462c0819:PsiDirectoryNode" />
               <item name="17.08.18" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -411,24 +411,32 @@
       <option name="project" value="LOCAL" />
       <updated>1534922707362</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="tmp">
+      <created>1534923649766</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1534923649766</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="621" y="25" width="1299" height="1000" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4943274" visible="true" weight="0.094976455" />
-      <window_info id="Structure" order="1" sideWeight="0.50567263" side_tool="true" visible="true" weight="0.094976455" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4912892" visible="true" weight="0.094976455" />
+      <window_info id="Structure" order="1" sideWeight="0.5087108" side_tool="true" visible="true" weight="0.094976455" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.34624144" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34624144" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.2972665" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.75056946" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.2972665" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.49430525" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32915717" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -546,22 +554,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="314" column="41" lean-forward="true" selection-start-line="314" selection-start-column="41" selection-end-line="314" selection-end-column="41" />
+          <folding>
+            <element signature="e#24#38#0" expanded="true" />
+            <marker date="1534930605902" expanded="true" signature="8924:9398" ph="..." />
+            <marker date="1534930605902" expanded="true" signature="9393:9398" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/misc/TODO">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="325" column="13" selection-start-line="325" selection-start-column="13" selection-end-line="325" selection-end-column="13" />
-          <folding>
-            <element signature="e#24#38#0" expanded="true" />
-            <marker date="1534923557247" expanded="true" signature="8924:9398" ph="..." />
-            <marker date="1534923557247" expanded="true" signature="9393:9398" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>

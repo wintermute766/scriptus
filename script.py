@@ -321,22 +321,10 @@ class app:
             contents = contents.lower()
             ans = contents.split("\n")
         ans = ans[:3]
-        ans[0] = ans[0].replace('«', '')
-        ans[0] = ans[0].replace('»', '')
-        ans[1] = ans[1].replace('«', '')
-        ans[1] = ans[1].replace('»', '')
-        ans[2] = ans[2].replace('«', '')
-        ans[2] = ans[2].replace('»', '')
-        '''
-        for answer in ans:
-            if not answer.isnumeric():
-                ans[ans.index(answer)] = preprocess_text(answer)
-        ans1 = []
-        for answer in ans:
-            if answer.isalpha():
-                ans1.append(answer)
-        ans = ans1
-        '''
+        regex = re.compile('[,\.!?«»]')
+        ans[0] = regex.sub('', ans[0])
+        ans[1] = regex.sub('', ans[1])
+        ans[2] = regex.sub('', ans[2])
         print(ans)
 
         show1 = open("./output/show1.txt", "w", encoding="utf-8")
