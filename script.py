@@ -20,8 +20,8 @@ coords_real_2 = "300 460"
 coords_train_1 = "40 340"
 coords_train_2 = "300 480"
 
-coords_q_real_1 = "40 320"
-coords_q_real_2 = "300 460"
+coords_q_real_1 = "20 200"
+coords_q_real_2 = "370 320"
 coords_q_train_1 = "20 200"
 coords_q_train_2 = "370 320"
 
@@ -33,11 +33,11 @@ screenshot_command = "scrot -s -q 100 {}.png &"
 image_command_1 = "mogrify -modulate 100,0 -resize 300% {}.png"
 image_command_2 = "./textcleaner {}.png {}.png"
 
-mystem = Mystem()
-russian_stopwords = stopwords.words("russian")
-
 
 def preprocess_text(text):
+    mystem = Mystem()
+    russian_stopwords = stopwords.words("russian")
+
     tokens = mystem.lemmatize(text.lower())
     tokens = [token for token in tokens if token not in russian_stopwords
               and token != " "
