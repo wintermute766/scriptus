@@ -366,6 +366,7 @@ class app:
     def highlight(self, ans, keywords, lines, show, count):
         for line in lines:
             if "http://" not in line and "https://" not in line:
+                line = line.lower()
                 if keywords != " ":
                     for keyword in keywords:
                         res = self.highlight_keywords(line, keyword, "\033[91m")
