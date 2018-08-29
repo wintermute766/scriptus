@@ -45,6 +45,8 @@ def preprocess_text(text):
     # tokens = mystem.lemmatize(text.lower())
     regex = re.compile('[,\.!?«»]')
     text = regex.sub('', text)
+    regex = re.compile('[|]')
+    text = regex.sub('I', text)
     tokens = text.lower().split(" ")
     tokens = [token for token in tokens if token not in russian_stopwords and token != " "]
     text = " ".join(tokens)
@@ -288,6 +290,10 @@ class app:
         with open(filename + ".txt", "r") as f:
             contents = f.read()
         ans = contents.split("\n")
+        regex = re.compile('[|]')
+        ans[0] = regex.sub('I', ans[0])
+        ans[1] = regex.sub('I', ans[1])
+        ans[2] = regex.sub('I', ans[2])
         result1 = open("./output/result1.txt", "w", encoding="utf-8")
         result2 = open("./output/result2.txt", "w", encoding="utf-8")
         result3 = open("./output/result3.txt", "w", encoding="utf-8")
@@ -355,6 +361,10 @@ class app:
         ans[0] = regex.sub('', ans[0])
         ans[1] = regex.sub('', ans[1])
         ans[2] = regex.sub('', ans[2])
+        regex = re.compile('[|]')
+        ans[0] = regex.sub('I', ans[0])
+        ans[1] = regex.sub('I', ans[1])
+        ans[2] = regex.sub('I', ans[2])
         print(ans)
 
         show1 = open("./output/show1.txt", "w", encoding="utf-8")

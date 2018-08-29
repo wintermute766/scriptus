@@ -15,7 +15,7 @@
     <session id="1317076842">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="25" />
+          <entry key="project.closed" value="26" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="2" />
@@ -23,10 +23,10 @@
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="13" />
-          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="27" />
+          <entry key="project.opened" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -39,16 +39,16 @@
         <counts>
           <entry key="TODO" value="134" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="2748" />
+          <entry key="py" value="2753" />
           <entry key="temp" value="2" />
-          <entry key="txt" value="139" />
+          <entry key="txt" value="164" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="PLAIN_TEXT" value="274" />
-          <entry key="Python" value="2748" />
+          <entry key="PLAIN_TEXT" value="299" />
+          <entry key="Python" value="2753" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -76,12 +76,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="293" column="11" selection-start-line="293" selection-start-column="11" selection-end-line="293" selection-end-column="11" />
+            <state relative-caret-position="351">
+              <caret line="358" column="38" lean-forward="true" selection-start-line="358" selection-start-column="38" selection-end-line="358" selection-end-column="38" />
               <folding>
                 <element signature="e#24#38#0" expanded="true" />
-                <marker date="1535542378479" expanded="true" signature="847:915" ph="..." />
-                <marker date="1535542378479" expanded="true" signature="8678:9165" ph="..." />
+                <marker date="1535558765365" expanded="true" signature="847:915" ph="..." />
+                <marker date="1535558765365" expanded="true" signature="8740:9227" ph="..." />
               </folding>
             </state>
           </provider>
@@ -160,17 +160,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -182,6 +171,17 @@
               <item name="scriptus" type="b2602c69:ProjectViewProjectNode" />
               <item name="scriptus" type="462c0819:PsiDirectoryNode" />
               <item name="17.08.18" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -465,15 +465,22 @@
       <option name="project" value="LOCAL" />
       <updated>1535535143217</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="performance improvement">
+      <created>1535542455275</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1535542455275</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="218" y="25" width="1702" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47874016" visible="true" weight="0.09898628" />
-      <window_info id="Structure" order="1" sideWeight="0.52125984" side_tool="true" visible="true" weight="0.09898628" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47716534" visible="true" weight="0.09898628" />
+      <window_info id="Structure" order="1" sideWeight="0.52283466" side_tool="true" visible="true" weight="0.09898628" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
@@ -482,7 +489,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.2972665" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.29692832" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.49430525" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003712" side_tool="true" weight="0.2972665" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32915717" />
@@ -563,7 +570,8 @@
     <MESSAGE value="bugfix" />
     <MESSAGE value="tmp" />
     <MESSAGE value="area+" />
-    <option name="LAST_COMMIT_MESSAGE" value="area+" />
+    <MESSAGE value="performance improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="performance improvement" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/17.08.18/answer5.png" />
@@ -604,12 +612,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="293" column="11" selection-start-line="293" selection-start-column="11" selection-end-line="293" selection-end-column="11" />
+        <state relative-caret-position="351">
+          <caret line="358" column="38" lean-forward="true" selection-start-line="358" selection-start-column="38" selection-end-line="358" selection-end-column="38" />
           <folding>
             <element signature="e#24#38#0" expanded="true" />
-            <marker date="1535542378479" expanded="true" signature="847:915" ph="..." />
-            <marker date="1535542378479" expanded="true" signature="8678:9165" ph="..." />
+            <marker date="1535558765365" expanded="true" signature="847:915" ph="..." />
+            <marker date="1535558765365" expanded="true" signature="8740:9227" ph="..." />
           </folding>
         </state>
       </provider>
