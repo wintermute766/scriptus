@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/script.py" afterDir="false" />
-    </list>
+    <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +12,7 @@
     <session id="1317076842">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="26" />
+          <entry key="project.closed" value="27" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="2" />
@@ -37,18 +34,18 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="TODO" value="134" />
+          <entry key="TODO" value="154" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="2753" />
+          <entry key="py" value="2756" />
           <entry key="temp" value="2" />
-          <entry key="txt" value="164" />
+          <entry key="txt" value="170" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="PLAIN_TEXT" value="299" />
-          <entry key="Python" value="2753" />
+          <entry key="PLAIN_TEXT" value="325" />
+          <entry key="Python" value="2756" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -76,12 +73,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="358" column="38" lean-forward="true" selection-start-line="358" selection-start-column="38" selection-end-line="358" selection-end-column="38" />
+            <state relative-caret-position="450">
+              <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
               <folding>
                 <element signature="e#24#38#0" expanded="true" />
-                <marker date="1535558765365" expanded="true" signature="847:915" ph="..." />
-                <marker date="1535558765365" expanded="true" signature="8740:9227" ph="..." />
+                <marker date="1535560800030" expanded="true" signature="847:915" ph="..." />
+                <marker date="1535560800030" expanded="true" signature="8742:9229" ph="..." />
               </folding>
             </state>
           </provider>
@@ -91,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/misc/TODO">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+              <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -148,11 +145,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="218" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="601" />
     <option name="y" value="25" />
-    <option name="width" value="1702" />
-    <option name="height" value="1000" />
+    <option name="width" value="1319" />
+    <option name="height" value="973" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -472,24 +469,37 @@
       <option name="project" value="LOCAL" />
       <updated>1535542455275</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="bugfix">
+      <created>1535559121385</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1535559121385</updated>
+    </task>
+    <task id="LOCAL-00031" summary="bugfix">
+      <created>1535561441117</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1535561441117</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="218" y="25" width="1702" height="1000" extended-state="0" />
-    <editor active="true" />
+    <frame x="601" y="25" width="1319" height="973" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47716534" visible="true" weight="0.09898628" />
-      <window_info id="Structure" order="1" sideWeight="0.52283466" side_tool="true" visible="true" weight="0.09898628" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47579297" visible="true" weight="0.1282844" />
+      <window_info id="Structure" order="1" sideWeight="0.524207" side_tool="true" visible="true" weight="0.1282844" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996288" visible="true" weight="0.27676538" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4996288" weight="0.28554642" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997722" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.29692832" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" visible="true" weight="0.29612222" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.49430525" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003712" side_tool="true" weight="0.2972665" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32915717" />
@@ -567,11 +577,11 @@
     <MESSAGE value="bugfix and refactor" />
     <MESSAGE value="new bugs" />
     <MESSAGE value="gui fix" />
-    <MESSAGE value="bugfix" />
     <MESSAGE value="tmp" />
     <MESSAGE value="area+" />
     <MESSAGE value="performance improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="performance improvement" />
+    <MESSAGE value="bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/17.08.18/answer5.png" />
@@ -610,22 +620,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="358" column="38" lean-forward="true" selection-start-line="358" selection-start-column="38" selection-end-line="358" selection-end-column="38" />
-          <folding>
-            <element signature="e#24#38#0" expanded="true" />
-            <marker date="1535558765365" expanded="true" signature="847:915" ph="..." />
-            <marker date="1535558765365" expanded="true" signature="8740:9227" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/misc/TODO">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+          <folding>
+            <element signature="e#24#38#0" expanded="true" />
+            <marker date="1535560800030" expanded="true" signature="847:915" ph="..." />
+            <marker date="1535560800030" expanded="true" signature="8742:9229" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

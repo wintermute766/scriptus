@@ -322,7 +322,7 @@ class app:
 
     @staticmethod
     def perform_search(input, query, file, queue, msg):
-        subprocess.call(["BROWSER=w3m googler -C --np -n 10 " + input + " " + query], shell=True, stdout=file)
+        subprocess.call(["BROWSER=w3m googler -C --np -n 8 " + input + " " + query], shell=True, stdout=file)
         queue.put(msg)
 
     @staticmethod
@@ -442,5 +442,5 @@ if __name__ == '__main__':
     pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
-    app(root, "train")
+    app(root, "real")
     root.mainloop()
