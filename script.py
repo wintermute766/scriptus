@@ -20,6 +20,9 @@ coords_real_2 = "300 460"
 coords_train_1 = "40 340"
 coords_train_2 = "300 480"
 
+coords_real_1_plus = "40 320"
+coords_real_2_plus = "330 460"
+
 coords_q_real_1 = "20 180"
 coords_q_real_2 = "370 300"
 coords_q_train_1 = "20 200"
@@ -102,6 +105,9 @@ class GuiPart:
 
         self.b8 = Button(self.row2, text='Auto', command=(lambda: auto_search(self.filename.get(), area, queue)))
         self.b8.pack(side=LEFT, padx=5, pady=5)
+
+        self.b9 = Button(self.row2, text='Auto+', command=(lambda: auto_search(self.filename.get(), "plus", queue)))
+        self.b9.pack(side=LEFT, padx=5, pady=5)
 
         # row 3
 
@@ -189,8 +195,10 @@ class app:
         subprocess.call([screenshot_command.format(filename)], shell=True)
         if area == "train":
             self.choose_area(coords_train_1, coords_train_2)
-        else:
+        elif area == "real":
             self.choose_area(coords_real_1, coords_real_2)
+        elif area == "plus":
+            self.choose_area(coords_real_1_plus, coords_real_2_plus)
         time.sleep(0.2)
         subprocess.call([image_command_1.format(filename)], shell=True)
         subprocess.call([image_command_2.format(filename, filename)], shell=True)
@@ -207,7 +215,9 @@ class app:
         subprocess.call([screenshot_command.format(filename)], shell=True)
         if area == "train":
             self.choose_area(coords_q_train_1, coords_q_train_2)
-        else:
+        elif area == "real":
+            self.choose_area(coords_q_real_1, coords_q_real_2)
+        elif area == "plus":
             self.choose_area(coords_q_real_1, coords_q_real_2)
         time.sleep(0.2)
         subprocess.call(["mogrify -negate -modulate 100,0 -resize 300% " + filename + ".png"], shell=True)
@@ -410,5 +420,5 @@ if __name__ == '__main__':
     pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
-    app(root, "train")
+    app(root, "real")
     root.mainloop()
