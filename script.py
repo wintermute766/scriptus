@@ -43,7 +43,7 @@ russian_stopwords = stopwords.words("russian")
 
 def preprocess_text(text):
     # tokens = mystem.lemmatize(text.lower())
-    regex = re.compile('[,\.!?«»]')
+    regex = re.compile('[,\.!?«»()]')
     text = regex.sub('', text)
     regex = re.compile('[|]')
     text = regex.sub('I', text)
