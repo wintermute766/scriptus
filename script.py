@@ -9,11 +9,12 @@ from tkinter import *
 import pytesseract
 from PIL import Image
 
+import concurrent.futures
+
 # import nltk
 # nltk.download("stopwords")
 from nltk.corpus import stopwords
 from pymystem3 import Mystem
-from string import punctuation
 
 coords_real_1 = "40 320"
 coords_real_2 = "300 460"
@@ -41,12 +42,12 @@ russian_stopwords = stopwords.words("russian")
 
 
 def preprocess_text(text):
-    tokens = mystem.lemmatize(text.lower())
-    tokens = [token for token in tokens if token not in russian_stopwords
-              and token != " "
-              and token.strip() not in punctuation]
+    # tokens = mystem.lemmatize(text.lower())
+    regex = re.compile('[,\.!?«»]')
+    text = regex.sub('', text)
+    tokens = text.lower().split(" ")
+    tokens = [token for token in tokens if token not in russian_stopwords and token != " "]
     text = " ".join(tokens)
-
     return text
 
 
@@ -191,7 +192,7 @@ class app:
         subprocess.call([command_move.format(coords2)], shell=True)
         subprocess.call([command_up], shell=True)
 
-    def screenshot_and_preprocess(self, filename, area):
+    def screenshot_answer(self, filename, area):
         subprocess.call([screenshot_command.format(filename)], shell=True)
         if area == "train":
             self.choose_area(coords_train_1, coords_train_2)
@@ -211,7 +212,7 @@ class app:
         im.paste(toPaste, box2)
         im.save(filename + ".png")
 
-    def screenshot_answer(self, filename, area):
+    def screenshot_question(self, filename, area):
         subprocess.call([screenshot_command.format(filename)], shell=True)
         if area == "train":
             self.choose_area(coords_q_train_1, coords_q_train_2)
@@ -222,6 +223,22 @@ class app:
         time.sleep(0.2)
         subprocess.call(["mogrify -negate -modulate 100,0 -resize 300% " + filename + ".png"], shell=True)
         subprocess.call([image_command_2.format(filename, filename)], shell=True)
+
+    @staticmethod
+    def ocr_answer(filename, queue):
+        text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
+        with open(filename + ".txt", "w") as f:
+            f.write(text)
+        with open(filename + ".txt", "r") as f:
+            contents = f.read()
+        with open(filename + ".txt", "w") as f:
+            contents = re.sub(re.escape("\n\n"), "\n", contents, flags=re.I)
+            contents = re.sub(re.escape("\n \n"), "\n", contents, flags=re.I)
+            f.write(contents)
+            queue.put("ocr_success")
+
+    @staticmethod
+    def ocr_question(filename):
         text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
         lines = text.split("\n")
         question = ""
@@ -236,24 +253,14 @@ class app:
             f.write(question)
 
     def do_ocr_only(self, filename, queue):
-        self.ocr(filename, queue)
+        self.ocr_answer(filename, queue)
 
     def do_shot_and_ocr(self, filename, area, queue):
-        self.screenshot_and_preprocess(filename, area)
-        self.ocr(filename, queue)
-
-    @staticmethod
-    def ocr(filename, queue):
-        text = pytesseract.image_to_string(Image.open(filename + ".png"), lang='rus+eng')
-        with open(filename + ".txt", "w") as f:
-            f.write(text)
-        with open(filename + ".txt", "r") as f:
-            contents = f.read()
-        with open(filename + ".txt", "w") as f:
-            contents = re.sub(re.escape("\n\n"), "\n", contents, flags=re.I)
-            contents = re.sub(re.escape("\n \n"), "\n", contents, flags=re.I)
-            f.write(contents)
-            queue.put("ocr_success")
+        self.screenshot_answer(filename, area)
+        self.screenshot_question("output/question", area)
+        with concurrent.futures.ProcessPoolExecutor(max_workers=2) as executor:
+            executor.submit(self.ocr_answer(filename, queue))
+            executor.submit(self.ocr_question("output/question"))
 
     def do_search(self, filename, input, queue):
         time1 = time.time()
@@ -263,9 +270,8 @@ class app:
         print(time2 - time1)
 
     def do_auto_search(self, filename, area, queue):
-        self.do_shot_and_ocr(filename, area, queue)
         time1 = time.time()
-        self.screenshot_answer("output/question", area)
+        self.do_shot_and_ocr(filename, area, queue)
         with open("output/question.txt", "r") as f:
             contents = f.read()
             contents = preprocess_text(contents)
@@ -282,11 +288,18 @@ class app:
         with open(filename + ".txt", "r") as f:
             contents = f.read()
         ans = contents.split("\n")
-
         result1 = open("./output/result1.txt", "w", encoding="utf-8")
         result2 = open("./output/result2.txt", "w", encoding="utf-8")
         result3 = open("./output/result3.txt", "w", encoding="utf-8")
-
+        '''
+        with concurrent.futures.ProcessPoolExecutor(max_workers=3) as executor:
+            executor.submit(self.perform_search(input, ans[0], result1, queue, "success1"))
+            executor.submit(self.perform_search(input, ans[1], result2, queue, "success2"))
+            executor.submit(self.perform_search(input, ans[2], result3, queue, "success3"))
+        result1.close()
+        result2.close()
+        result3.close()
+        '''
         thread1 = threading.Thread(target=(lambda: self.perform_search(input, ans[0], result1, queue, "success1")))
         thread1.start()
         thread2 = threading.Thread(target=(lambda: self.perform_search(input, ans[1], result2, queue, "success2")))
@@ -322,14 +335,13 @@ class app:
         f3.close()
 
     def do_visualize(self, filename, input):
-
         if input == "":
             keywords = " "
         else:
             keywords = input.split(" ")
         keywords1 = []
         for keyword in keywords:
-            if keyword.isalpha() or keyword.isnumeric():
+            if keyword.isalnum():
                 keywords1.append(keyword)
         keywords = keywords1
         print(keywords)
@@ -420,5 +432,5 @@ if __name__ == '__main__':
     pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
-    app(root, "real")
+    app(root, "train")
     root.mainloop()
