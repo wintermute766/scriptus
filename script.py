@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
+import threading
 import pathlib
 import queue
 import subprocess
-import threading
 import time
 from tkinter import *
 
@@ -297,7 +298,6 @@ class app:
         result1 = open("./output/result1.txt", "w", encoding="utf-8")
         result2 = open("./output/result2.txt", "w", encoding="utf-8")
         result3 = open("./output/result3.txt", "w", encoding="utf-8")
-        '''
         with concurrent.futures.ProcessPoolExecutor(max_workers=3) as executor:
             executor.submit(self.perform_search(input, ans[0], result1, queue, "success1"))
             executor.submit(self.perform_search(input, ans[1], result2, queue, "success2"))
@@ -312,13 +312,13 @@ class app:
         thread2.start()
         thread3 = threading.Thread(target=(lambda: self.perform_search(input, ans[2], result3, queue, "success3")))
         thread3.start()
-
         thread1.join()
         result1.close()
         thread2.join()
         result2.close()
         thread3.join()
         result3.close()
+        '''
 
     @staticmethod
     def perform_search(input, query, file, queue, msg):
@@ -405,9 +405,11 @@ class app:
                         line = res[0]
                         # count[0] = count[0] + res[1]
                 for answer in ans:
-                    res = self.highlight_keywords(line, answer, "\033[95m")
-                    line = res[0]
-                    count[ans.index(answer)] = count[ans.index(answer)] + res[1]
+                    words = answer.split(" ")
+                    for word in words:
+                        res = self.highlight_keywords(line, word, "\033[95m")
+                        line = res[0]
+                        count[ans.index(answer)] = count[ans.index(answer)] + res[1]
                 line = self.highlight_digits(line)
                 show.write(line)
 
@@ -439,8 +441,9 @@ class app:
 
 
 if __name__ == '__main__':
+    os.environ['OMP_THREAD_LIMIT'] = '4'
     pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
-    app(root, "real")
+    app(root, "train")
     root.mainloop()

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="" />
+    <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/misc/answer23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/question23.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/script.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,7 +17,7 @@
     <session id="1317076842">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="27" />
+          <entry key="project.closed" value="29" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="2" />
@@ -20,10 +25,11 @@
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="13" />
-          <entry key="project.open.time.6" value="2" />
+          <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="28" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="31" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -36,16 +42,16 @@
         <counts>
           <entry key="TODO" value="154" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="2756" />
+          <entry key="py" value="2854" />
           <entry key="temp" value="2" />
-          <entry key="txt" value="170" />
+          <entry key="txt" value="173" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bash" value="2" />
-          <entry key="PLAIN_TEXT" value="325" />
-          <entry key="Python" value="2756" />
+          <entry key="PLAIN_TEXT" value="328" />
+          <entry key="Python" value="2854" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -73,12 +79,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+            <state relative-caret-position="185">
+              <caret line="321" lean-forward="true" selection-start-line="321" selection-end-line="321" />
               <folding>
-                <element signature="e#24#38#0" expanded="true" />
-                <marker date="1535560800030" expanded="true" signature="847:915" ph="..." />
-                <marker date="1535560800030" expanded="true" signature="8742:9229" ph="..." />
+                <element signature="e#24#33#0" expanded="true" />
+                <marker date="1535637045724" expanded="true" signature="857:925" ph="..." />
+                <marker date="1535637045724" expanded="true" signature="8752:9239" ph="..." />
               </folding>
             </state>
           </provider>
@@ -107,6 +113,8 @@
       <find>googl</find>
       <find>split</find>
       <find>thread</find>
+      <find>submit</find>
+      <find>os.en</find>
     </findStrings>
   </component>
   <component name="Git.Rebase.Settings">
@@ -145,11 +153,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="601" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="441" />
     <option name="y" value="25" />
-    <option name="width" value="1319" />
-    <option name="height" value="973" />
+    <option name="width" value="1479" />
+    <option name="height" value="968" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -483,26 +491,33 @@
       <option name="project" value="LOCAL" />
       <updated>1535561441117</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="tmp">
+      <created>1535563116210</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1535563116210</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="601" y="25" width="1319" height="973" extended-state="0" />
+    <frame x="441" y="25" width="1479" height="968" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47579297" visible="true" weight="0.1282844" />
-      <window_info id="Structure" order="1" sideWeight="0.524207" side_tool="true" visible="true" weight="0.1282844" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47272727" visible="true" weight="0.11416781" />
+      <window_info id="Structure" order="1" sideWeight="0.5272727" side_tool="true" visible="true" weight="0.11416781" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4996288" weight="0.28554642" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996288" visible="true" weight="0.28486997" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997722" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" visible="true" weight="0.29612222" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.49430525" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.2683215" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.49357602" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003712" side_tool="true" weight="0.2972665" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32915717" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32869378" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -577,11 +592,11 @@
     <MESSAGE value="bugfix and refactor" />
     <MESSAGE value="new bugs" />
     <MESSAGE value="gui fix" />
-    <MESSAGE value="tmp" />
     <MESSAGE value="area+" />
     <MESSAGE value="performance improvement" />
     <MESSAGE value="bugfix" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
+    <MESSAGE value="tmp" />
+    <option name="LAST_COMMIT_MESSAGE" value="tmp" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/17.08.18/answer5.png" />
@@ -620,22 +635,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="321" lean-forward="true" selection-start-line="321" selection-end-line="321" />
+          <folding>
+            <element signature="e#24#33#0" expanded="true" />
+            <marker date="1535637045724" expanded="true" signature="857:925" ph="..." />
+            <marker date="1535637045724" expanded="true" signature="8752:9239" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/misc/TODO">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-          <folding>
-            <element signature="e#24#38#0" expanded="true" />
-            <marker date="1535560800030" expanded="true" signature="847:915" ph="..." />
-            <marker date="1535560800030" expanded="true" signature="8742:9229" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
