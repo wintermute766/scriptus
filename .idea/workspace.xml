@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0adb8b10-05a5-4f73-b2bd-7514f2636346" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/misc/answer23.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/misc/question23.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/script.py" afterDir="false" />
     </list>
@@ -17,7 +15,7 @@
     <session id="1317076842">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="29" />
+          <entry key="project.closed" value="30" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="2" />
@@ -25,11 +23,11 @@
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="13" />
-          <entry key="project.open.time.6" value="4" />
+          <entry key="project.open.time.6" value="5" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="31" />
+          <entry key="project.opened" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -42,7 +40,7 @@
         <counts>
           <entry key="TODO" value="154" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="2854" />
+          <entry key="py" value="2868" />
           <entry key="temp" value="2" />
           <entry key="txt" value="173" />
         </counts>
@@ -51,7 +49,7 @@
         <counts>
           <entry key="Bash" value="2" />
           <entry key="PLAIN_TEXT" value="328" />
-          <entry key="Python" value="2854" />
+          <entry key="Python" value="2868" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -79,12 +77,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="321" lean-forward="true" selection-start-line="321" selection-end-line="321" />
+            <state relative-caret-position="419">
+              <caret line="310" column="23" lean-forward="true" selection-start-line="310" selection-start-column="23" selection-end-line="310" selection-end-column="23" />
               <folding>
                 <element signature="e#24#33#0" expanded="true" />
-                <marker date="1535637045724" expanded="true" signature="857:925" ph="..." />
-                <marker date="1535637045724" expanded="true" signature="8752:9239" ph="..." />
+                <marker date="1535711371107" expanded="true" signature="857:925" ph="..." />
+                <marker date="1535711371107" expanded="true" signature="8752:9239" ph="..." />
               </folding>
             </state>
           </provider>
@@ -165,6 +163,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -176,17 +185,6 @@
               <item name="scriptus" type="b2602c69:ProjectViewProjectNode" />
               <item name="scriptus" type="462c0819:PsiDirectoryNode" />
               <item name="17.08.18" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="scriptus" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -498,23 +496,31 @@
       <option name="project" value="LOCAL" />
       <updated>1535563116210</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="tmp">
+      <created>1535637408948</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1535637408948</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="441" y="25" width="1479" height="968" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47272727" visible="true" weight="0.11416781" />
-      <window_info id="Structure" order="1" sideWeight="0.5272727" side_tool="true" visible="true" weight="0.11416781" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47044918" visible="true" weight="0.11416781" />
+      <window_info id="Structure" order="1" sideWeight="0.52955085" side_tool="true" visible="true" weight="0.11416781" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4259681" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996288" visible="true" weight="0.28486997" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4996288" weight="0.28486997" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997722" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.2683215" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4996288" weight="0.26800472" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.49357602" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003712" side_tool="true" weight="0.2972665" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32869378" />
@@ -637,12 +643,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="321" lean-forward="true" selection-start-line="321" selection-end-line="321" />
+        <state relative-caret-position="419">
+          <caret line="310" column="23" lean-forward="true" selection-start-line="310" selection-start-column="23" selection-end-line="310" selection-end-column="23" />
           <folding>
             <element signature="e#24#33#0" expanded="true" />
-            <marker date="1535637045724" expanded="true" signature="857:925" ph="..." />
-            <marker date="1535637045724" expanded="true" signature="8752:9239" ph="..." />
+            <marker date="1535711371107" expanded="true" signature="857:925" ph="..." />
+            <marker date="1535711371107" expanded="true" signature="8752:9239" ph="..." />
           </folding>
         </state>
       </provider>

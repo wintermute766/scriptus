@@ -298,6 +298,7 @@ class app:
         result1 = open("./output/result1.txt", "w", encoding="utf-8")
         result2 = open("./output/result2.txt", "w", encoding="utf-8")
         result3 = open("./output/result3.txt", "w", encoding="utf-8")
+        '''
         with concurrent.futures.ProcessPoolExecutor(max_workers=3) as executor:
             executor.submit(self.perform_search(input, ans[0], result1, queue, "success1"))
             executor.submit(self.perform_search(input, ans[1], result2, queue, "success2"))
@@ -318,7 +319,6 @@ class app:
         result2.close()
         thread3.join()
         result3.close()
-        '''
 
     @staticmethod
     def perform_search(input, query, file, queue, msg):
@@ -441,9 +441,9 @@ class app:
 
 
 if __name__ == '__main__':
-    os.environ['OMP_THREAD_LIMIT'] = '4'
+    # os.environ['OMP_THREAD_LIMIT'] = '4'
     pathlib.Path("output").mkdir(parents=True, exist_ok=True)
     root = Tk()
     root.title("Клевер")
-    app(root, "train")
+    app(root, "real")
     root.mainloop()
